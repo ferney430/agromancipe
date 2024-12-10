@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../AGROMANCIPE/Estilos/Index.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+ 
+ <style>
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F5F5F5;
+    color: #333;
+}
+
+/* Encabezado */
+.encabezado {
+    display:flex;
+ 
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #FFFFFF;
+    color: #333;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.encabezado__logo img {
+    width: 120px;
+}
+
+.menu-hamburguesa {
+    display: none;
+    font-size: 1.8rem;
+    color: #333;
+    cursor: pointer;
+}
+
+.navegacion .menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.menu-item {
+    position: relative;
+}
+
+.menu-item a {
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.menu-item a:hover,
+.menu-item a.activo {
+    background-color: #75EE58;
+    border-radius: 5px;
+}
+
+/* Submenu */
+.submenu {
+    display: none;
+    position: absolute;
+    background-color: #00AA4E;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    min-width: 180px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.menu-item:hover .submenu {
+    display: block;
+}
+
+.submenu li a {
+    padding: 0.5rem 1rem;
+    color: #FFF;
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.submenu li a:hover {
+    background-color: #75EE58;
+}
+
+/* Barra de búsqueda */
+.busqueda-sitio {
+    display: flex;
+    align-items: center;
+    background-color: #F0F0F0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.busqueda-sitio input[type="text"] {
+    padding: 0.25rem 0.5rem;
+    border: none;
+    background-color: transparent;
+    color: #333;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+.busqueda-sitio input[type="text"]::placeholder {
+    color: #666;
+}
+
+.busqueda-sitio button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.busqueda-sitio button img {
+    width: 18px;
+    height: 18px;
+    filter: invert(50%); /* Hace el ícono más sutil */
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .navegacion {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #FFFFFF;
+    }
+
+    .menu {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .menu-item a {
+        padding: 1rem;
+        display: block;
+        width: 100%;
+    }
+
+    .submenu {
+        position: static;
+    }
+
+    .menu-hamburguesa {
+        display: block;
+    }
+
+    .menu-activo {
+        display: flex;
+    }
+}
+
+
+
+
+.perfil {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.perfil img {
+    width: 30px;
+    height: 30px;
+}
+
+.perfil a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+/* Estilos generales del footer */
+.pie-pagina {
+  background-color: #FFFFFF; /* Fondo blanco */
+  color: #00AA4E; /* Texto verde oscuro */
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  border-top: 4px solid #75EE58;
+}
+
+.contenedor-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.columna {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.columna h3 {
+  color: #00AA4E;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Estilos para las secciones de contacto, horario y boletín */
+.columna-contacto p,
+.columna-horario p,
+.columna-enlaces a,
+.columna-redes a {
+  color: #333333;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.columna-enlaces ul {
+  list-style: none;
+  padding: 0;
+}
+
+.columna-enlaces a {
+  color: #00AA4E;
+  text-decoration: none;
+}
+
+.columna-enlaces a:hover {
+  color: #75EE58;
+  text-decoration: underline;
+}
+
+.columna-horario p {
+  font-size: 14px;
+  color: #333333;
+}
+
+/* Formulario de suscripción al boletín */
+.columna-suscripcion form {
+  flex-direction: column;
+}
+
+.columna-suscripcion input[type="email"] {
+  padding: 10px;
+  border: 1px solid #00AA4E;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.columna-suscripcion button {
+  background-color: #00AA4E;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.columna-suscripcion button:hover {
+  background-color: #75EE58;
+}
+
+/* Estilos de los íconos de redes sociales */
+.icono-redes {
+  width: 200%;
+  font-size: 500px;
+  color: #00AA4E;
+  margin-right: 100px;
+  transition: color 0.3s;
+}
+
+.icono-redes:hover {
+  color: #75EE58;
+}
+
+/* Sección de derechos reservados */
+.footer-derechos {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 13px;
+  color: #333333;
+  border-top: 1px solid #75EE58;
+}
+
+
+
+  
+
+
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .contenedor-footer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .columna {
+    text-align: center;
+  }
+}
+
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Encabezado */
+.header {
+    background-color: #00AA4E;
+    color: white;
+    padding: 2px;
+    text-align: center;
+}
+
+/* Sección de Bienvenida */
+.welcome-section {
+    text-align: center;
+    padding: 50px;
+    background-color: #f4f4f4;
+}
+
+.welcome-section h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.welcome-section p {
+    font-size: 1.2em;
+    color: #555;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Sección de Por qué Elegirnos */
+.why-choose-us {
+    background-color: #ffffff;
+    padding: 50px;
+    text-align: center;
+}
+
+.why-choose-us h2 {
+    font-size: 2em;
+    color: #00AA4E;
+    margin-bottom: 30px;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1000px;
+    margin: auto;
+    gap: 20px;
+}
+
+.feature {
+    width: 30%;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.feature:hover {
+    transform: scale(1.05);
+}
+
+.feature img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.feature h3 {
+    margin-top: 15px;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.feature p {
+    color: #666;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+ </style>
+
+    <link rel="stylesheet" href="../AGROMANCIPE/Navegador.css">
+<link rel="stylesheet" href="../AGROMANCIPE/Fooder.css">
+
+
+    <header class="encabezado">
+        <div class="encabezado__logo">
+            <a href="https://nufarm.com/mx">
+                <img src="https://nufarm.com/mx/wp-content/themes/nufarm/images/site-logo.svg" alt="Nufarm México" />
+            </a>
+        </div>
+        <span class="menu-hamburguesa" onclick="toggleMenu()">&#9776;</span>
+        <nav class="navegacion">
+            <ul class="menu">
+                <li class="menu-item"><a href="../Index.php" class="activo">Inicio</a></li>
+                <li class="menu-item"><a href="../Producto/Selectproducto.php">Productos</a>
+                    <ul class="submenu">
+                        <li><a href="../Producto/SelectHervicida.php">Herbicidas</a></li>
+                        <li><a href="../Producto/SelectFungicidas.php">Fungicidas</a></li>
+                        <li><a href="../Producto/SelectInsecticidas.php">Insecticidas</a></li>
+
+                        <li><a href="../Producto/Nutricion.php">Nutricion</a></li>
+                        <li><a href="ttps://nufarm.com/mx/productos/reguladores-de-crecimiento-2/">Reguladores de Crecimiento</a></li>
+                        <li><a href="https://nufarm.com/mx/productos/coadyuvantes/">Coadyuvantes</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="../Navegador/Nosotros.php">Nosotros</a></li>
+                <li class="menu-item"><a href="../AGROMANCIPE/Navegador/Contactanos.php">Contactanos</a></li>
+                <li class="menu-item"><a href="../AGROMANCIPE/Login/Login.php">Login</a></li>
+                <li class="menu-item"><a href="../AGROMANCIPE/Cliente/Cliente.php">Regístrate</a></li>
+            </ul>
+        </nav>
+        <div class="busqueda-sitio">
+            <form id="busqueda-sitio" autocomplete="off" action="https://nufarm.com/mx/" method="get">
+                <input type="text" placeholder="Buscar..." name="s" />
+                <button type="submit"><img src="https://img.icons8.com/ios-glyphs/30/000000/search--v1.png" alt="Buscar" /></button>
+            </form>
+        </div>
+    </header>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.navegacion').classList.toggle('menu-activo');
+        }
+    </script>
+<body>
+<header class="header">
+        <h1>Bienvenidos a Agromancipe</h1>
+    </header>
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="../AGROMANCIPE/Imagenes/in1.jpeg" alt="First slide" height="500px">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="../AGROMANCIPE/Imagenes/in4.jpeg" alt="Second slide" height="500px">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="../AGROMANCIPE/Imagenes/in3.jpeg" alt="Third slide "height="500px">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
+    <!-- Sección de Bienvenida -->
+    <div class="welcome-section">
+        <h1>¡Bienvenidos!</h1>
+        <p>
+        Estamos encantados de darte la bienvenida a Agromancipe. Nos especializamos en ofrecer productos y servicios de calidad para satisfacer tus necesidades. Nuestro equipo está comprometido en brindarte una experiencia excepcional y acompañarte.
+        </p>
+    </div>
+
+    <!-- Sección de Por qué Elegirnos -->
+    <div class="why-choose-us">
+        <h2>¿Por qué elegirnos a nosotros?</h2>
+        <div class="features">
+
+            <div class="feature">
+                <img src="../AGROMANCIPE/Imagenes/m5.png" alt="Calidad de Productos">
+                <h3>Calidad Superior</h3>
+                <p>Ofrecemos productos de alta calidad para asegurar que obtengas lo mejor del mercado.</p>
+            </div>
+
+            <div class="feature">
+                <img src="../AGROMANCIPE/Imagenes/n9.jpeg" alt="Atención al Cliente">
+                <h3>Atención al Cliente</h3>
+                <p>Nuestro equipo de soporte está disponible para ayudarte y resolver tus dudas en todo momento.</p>
+            </div>
+
+            <div class="feature">
+                <img src="../AGROMANCIPE/Imagenes/n1.jpeg" alt="Experiencia">
+                <h3>Años de Experiencia</h3>
+                <p>Contamos con años de experiencia en el sector, lo que nos convierte en una empresa confiable y reconocida.</p>
+            </div>
+
+        </div>
+    </div>
+ 
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <link rel="stylesheet" href="../Fooder.css">
+      <script src="https://kit.fontawesome.com/e8cc9f8b41.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+    <footer class="pie-pagina">
+      <div class="contenedor-footer">
+        <div class="columna columna-contacto">
+          <h3>Contacto</h3>
+          <p><i class="fas fa-phone-alt"></i> Teléfono: +57 123 456 7890</p>
+          <p><i class="fas fa-envelope"></i> Email: info@agrotienda.com</p>
+          <p><i class="fas fa-map-marker-alt"></i> Dirección: Calle Principal #123, Tunja, Boyacá</p>
+        </div>
+        
+        <div class="columna columna-enlaces">
+          <h3>Enlaces Rápidos</h3>
+          <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Productos</a></li>
+            <li><a href="#">Sobre Nosotros</a></li>
+            <li><a href="#">Contacto</a></li>
+            <li><a href="#">Política de Privacidad</a></li>
+          </ul>
+        </div>
+    
+        <div class="columna columna-horario">
+          <h3>Horario de Atención</h3>
+          <p><i class="fas fa-clock"></i> Lunes a Viernes: 8:00 AM - 6:00 PM</p>
+          <p><i class="fas fa-clock"></i> Sábado: 9:00 AM - 1:00 PM</p>
+          <p><i class="fas fa-times-circle"></i> Domingo: Cerrado</p>
+        </div>
+    
+        <div class="columna columna-suscripcion">
+          <h3>Suscríbete a Nuestro Boletín</h3>
+          <form action="#" method="POST">
+            <input type="email" placeholder="Ingresa tu correo" name="email">
+            <button type="submit">Suscribirse</button>
+          </form>
+        </div>
+    
+        <div class="columna columna-redes">
+          <h3>Redes Sociales</h3>
+          <a href="#" class="icono-redes"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#" class="icono-redes"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" class="icono-redes"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+      
+    
+     
+    
+    
+      <div class="footer-derechos">
+        <p>&copy; 2024 AgroTienda. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+    
+    </body>
+    </html>
+
+
+
+
+  
+</body>
+</html>
